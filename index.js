@@ -1,22 +1,16 @@
-const CHAVE_LOCALSTORAGE = 'trailfix_ultima_localizacao';
+const CHAVE_LOCALSTORAGE = 'ultima_localizacao';
+
 
 const btnCapturar = document.getElementById('btn-capturar');
-const conteudoTela = document.getElementById('conteudo-tela');
 const statusSatelite = document.getElementById('status-satelite');
-const relogio = document.getElementById('relogio');
+const textoStatus = document.getElementById('texto-status');
+const valorLat = document.getElementById('valor-lat');
+const valorLon = document.getElementById('valor-lon');
+const legendaInfo = document.getElementById('legenda-info');
 const mensagemErro = document.getElementById('mensagem-erro');
 
 const itemPapel = document.getElementById('item-papel');
 const zonaLixeira = document.getElementById('zona-lixeira');
-
-function atualizarRelogio() {
-  const agora = new Date();
-  const horas = String(agora.getHours()).padStart(2, '0');
-  const minutos = String(agora.getMinutes()).padStart(2, '0');
-  relogio.textContent = `${horas}:${minutos}`;
-}
-atualizarRelogio();
-setInterval(atualizarRelogio, 1000 * 15);
 
 function formatarDataHora(timestamp) {
   const data = new Date(timestamp);
@@ -29,33 +23,25 @@ function formatarDataHora(timestamp) {
 }
 
 function exibirCoordenadas(latitude, longitude, timestamp, comoUltimaSalva) {
-  const lat = latitude.toFixed(5);
-  const lon = longitude.toFixed(5);
+  valorLat.textContent = latitude.toFixed(5);
+  valorLon.textContent = longitude.toFixed(5);
 
-  const tituloLinha = comoUltimaSalva
-    ? '&gt; Sua última localização'
-    : '&gt; Localização atual';
+  const prefixo = comoUltimaSalva
+    ? 'Sua última localização salva foi'
+    : 'Localização capturada';
 
-  const subtituloLinha = comoUltimaSalva ? 'salva foi:' : 'capturada:';
+  legendaInfo.textContent = `${prefixo} em ${formatarDataHora(timestamp)}`;
 
-  conteudoTela.innerHTML = `
-    <p class="linha-lcd pequena">${tituloLinha}</p>
-    <p class="linha-lcd pequena">${subtituloLinha}</p>
-    <p class="linha-lcd destaque">LAT ${lat}</p>
-    <p class="linha-lcd destaque">LON ${lon}</p>
-    <p class="linha-lcd pequena">registrado em ${formatarDataHora(timestamp)}</p>
-  `;
-
-  statusSatelite.textContent = '● GPS FIXO';
   statusSatelite.classList.add('ativo');
+  textoStatus.textContent = 'Localização encontrada';
 }
+
 function exibirTelaVazia() {
-  conteudoTela.innerHTML = `
-    <p class="linha-lcd">&gt; Aperte CAPTURAR</p>
-    <p class="linha-lcd">&gt; para localizar</p>
-  `;
-  statusSatelite.textContent = '● SEM SINAL';
+  valorLat.textContent = '—';
+  valorLon.textContent = '—';
+  legendaInfo.textContent = 'Nenhuma localização salva ainda.';
   statusSatelite.classList.remove('ativo');
+  textoStatus.textContent = 'Sem localização';
 }
 
 function carregarUltimaLocalizacaoSalva() {
@@ -69,10 +55,7 @@ function carregarUltimaLocalizacaoSalva() {
   try {
     const { latitude, longitude, timestamp } = JSON.parse(dadosSalvos);
     exibirCoordenadas(latitude, longitude, timestamp, true);
-  } catch (erro) 
-
-  {
-
+  } catch (erro) {
     localStorage.removeItem(CHAVE_LOCALSTORAGE);
     exibirTelaVazia();
   }
@@ -86,7 +69,7 @@ btnCapturar.addEventListener('click', () => {
     return;
   }
 
-  statusSatelite.textContent = '● BUSCANDO...';
+  textoStatus.textContent = 'Buscando localização...';
   statusSatelite.classList.remove('ativo');
 
   navigator.geolocation.getCurrentPosition(
@@ -102,8 +85,8 @@ btnCapturar.addEventListener('click', () => {
       exibirCoordenadas(latitude, longitude, timestamp, false);
     },
     (erro) => {
-      statusSatelite.textContent = '● SEM SINAL';
       statusSatelite.classList.remove('ativo');
+      textoStatus.textContent = 'Sem localização';
 
       switch (erro.code) {
         case erro.PERMISSION_DENIED:
@@ -123,10 +106,9 @@ btnCapturar.addEventListener('click', () => {
   );
 });
 
-
 itemPapel.addEventListener('dragstart', (evento) => {
   itemPapel.classList.add('arrastando');
-  evento.dataTransfer.setData('text/plain', 'papel-gps');
+  evento.dataTransfer.setData('text/plain', 'papel-localizacao');
   evento.dataTransfer.effectAllowed = 'move';
 });
 
