@@ -1,0 +1,235 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f6f8fb 0%, #eef1f6 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e2430;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1.2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+
+.cabecalho {
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.cabecalho h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #14213d;
+  margin-bottom: 0.35rem;
+}
+
+.subtitulo {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.cartao-localizacao,
+.cartao-drag {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.6rem;
+  box-shadow: 0 1px 3px rgba(20, 33, 61, 0.06), 0 8px 24px rgba(20, 33, 61, 0.06);
+  border: 1px solid #eceef2;
+}
+
+.linha-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.3rem;
+}
+
+.rotulo {
+  font-size: 0.8rem;
+  color: #8b93a3;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.bolinha {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #c7cbd4;
+  transition: background-color 0.2s ease;
+}
+
+.status.ativo .bolinha {
+  background-color: #22a06b;
+  box-shadow: 0 0 0 3px rgba(34, 160, 107, 0.15);
+}
+
+.status.ativo #texto-status {
+  color: #22a06b;
+}
+
+
+.coordenadas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.coord-item {
+  background: #f7f9fc;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  border: 1px solid #eef0f4;
+}
+
+.coord-rotulo {
+  display: block;
+  font-size: 0.72rem;
+  color: #8b93a3;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 0.3rem;
+}
+
+.coord-valor {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #14213d;
+  font-variant-numeric: tabular-nums;
+}
+
+.legenda-info {
+  font-size: 0.82rem;
+  color: #8b93a3;
+  margin-bottom: 1.3rem;
+}
+
+
+.botao-principal {
+  width: 100%;
+  background-color: #2f6feb;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.botao-principal:hover {
+  background-color: #2559c4;
+}
+
+.botao-principal:active {
+  transform: scale(0.98);
+}
+
+.mensagem-erro {
+  color: #d63b3b;
+  font-size: 0.83rem;
+  text-align: center;
+  margin-top: 0.9rem;
+  min-height: 1rem;
+}
+
+
+.titulo-drag {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #14213d;
+  margin-bottom: 0.3rem;
+}
+
+.instrucao-drag {
+  font-size: 0.82rem;
+  color: #8b93a3;
+  margin-bottom: 1.2rem;
+}
+
+.campo-drag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f9fc;
+  border: 1.5px dashed #d7dce4;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+}
+
+.item-papel {
+  font-size: 2.2rem;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.item-papel:active {
+  cursor: grabbing;
+}
+
+.item-papel.arrastando {
+  opacity: 0.35;
+}
+
+.item-papel.sumindo {
+  transform: scale(0) rotate(20deg);
+  opacity: 0;
+}
+
+.zona-lixeira {
+  font-size: 2.2rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  transition: border-color 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+}
+
+.zona-lixeira.pode-soltar {
+  border-color: #2f6feb;
+  background-color: rgba(47, 111, 235, 0.08);
+  transform: scale(1.08);
+}
+
+.zona-lixeira.comendo {
+  animation: mastigar 0.4s ease;
+}
+
+@keyframes mastigar {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.2) rotate(-6deg); }
+  60%  { transform: scale(0.95) rotate(4deg); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 420px) {
+  .cabecalho h1 { font-size: 1.4rem; }
+  .coord-valor { font-size: 1.05rem; }
+}
