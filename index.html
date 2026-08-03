@@ -1,26 +1,76 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Persistência PFE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrailFix 2000 - GPS de Bolso</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h2>Mini-mapa GPS</h2>
+  <div class="mesa">
 
-    <button id="btn-localizar">Capturar minha localização</button>
+    <h1 class="titulo-pagina">🧭 Atividade PFE — Localização com Persistência</h1>
 
-    <div id="gps-display">
-        <p id="status-localizacao">Nenhuma localização capturada ainda.</p>
+    <div class="gps-device">
+
+      <div class="gps-marca">
+        <span>TrailFix</span><span class="gps-modelo">2000</span>
+      </div>
+
+      <div class="tela-bezel">
+        <div class="tela-lcd" id="tela-lcd">
+
+          <div class="linha-status">
+            <span id="status-satelite">● SEM SINAL</span>
+            <span id="relogio">--:--</span>
+          </div>
+
+          <div class="conteudo-tela" id="conteudo-tela">
+            <p class="linha-lcd">&gt; Aperte CAPTURAR</p>
+            <p class="linha-lcd">&gt; para localizar</p>
+          </div>
+
+        </div>
+        <div class="parafuso pf-tl"></div>
+        <div class="parafuso pf-tr"></div>
+        <div class="parafuso pf-bl"></div>
+        <div class="parafuso pf-br"></div>
+      </div>
+
+      <div class="painel-botoes">
+        <button id="btn-capturar" class="botao-fisico botao-verde">CAPTURAR</button>
+        <div class="dpad">
+          <div class="dpad-topo"></div>
+          <div class="dpad-meio">
+            <div class="dpad-esq"></div>
+            <div class="dpad-centro"></div>
+            <div class="dpad-dir"></div>
+          </div>
+          <div class="dpad-baixo"></div>
+        </div>
+      </div>
+
+      <div class="fenda-alto-falante">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    
+    <p class="mensagem-erro" id="mensagem-erro"></p>
+
+    <div class="area-drag">
+      <p class="instrucao-drag">Arraste o papel até a lixeira para apagar a localização salva:</p>
+
+      <div class="campo-drag">
+        <div class="item-papel" id="item-papel" draggable="true">📄</div>
+        <div class="zona-lixeira" id="zona-lixeira">🗑️</div>
+      </div>
     </div>
 
-    <hr>
+  </div>
 
-    <div id="papel" draggable="true">📄</div>
-    <div id="lixeira">🗑️</div>
-
-    <script src="index.js"></script>
-
+  <script src="js/index.js"></script>
 </body>
 </html>
