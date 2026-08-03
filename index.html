@@ -3,71 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrailFix 2000 - GPS de Bolso</title>
+  <title>Minha Localização | Atividade PFE</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="mesa">
+  <div class="container">
 
-    <h1 class="titulo-pagina">🧭 Atividade PFE — Localização com Persistência</h1>
+    <header class="cabecalho">
+      <h1>Minha Localização</h1>
+      <p class="subtitulo">Captura, exibição e persistência de coordenadas com localStorage</p>
+    </header>
 
-    <div class="gps-device">
+    <section class="cartao-localizacao">
 
-      <div class="gps-marca">
-        <span>TrailFix</span><span class="gps-modelo">2000</span>
+      <div class="linha-info">
+        <span class="rotulo">Status</span>
+        <span class="status" id="status-satelite">
+          <span class="bolinha" id="bolinha-status"></span>
+          <span id="texto-status">Sem localização</span>
+        </span>
       </div>
 
-      <div class="tela-bezel">
-        <div class="tela-lcd" id="tela-lcd">
-
-          <div class="linha-status">
-            <span id="status-satelite">● SEM SINAL</span>
-            <span id="relogio">--:--</span>
-          </div>
-
-          <div class="conteudo-tela" id="conteudo-tela">
-            <p class="linha-lcd">&gt; Aperte CAPTURAR</p>
-            <p class="linha-lcd">&gt; para localizar</p>
-          </div>
-
+      <div class="coordenadas" id="coordenadas">
+        <div class="coord-item">
+          <span class="coord-rotulo">Latitude</span>
+          <span class="coord-valor" id="valor-lat">—</span>
         </div>
-        <div class="parafuso pf-tl"></div>
-        <div class="parafuso pf-tr"></div>
-        <div class="parafuso pf-bl"></div>
-        <div class="parafuso pf-br"></div>
-      </div>
-
-      <div class="painel-botoes">
-        <button id="btn-capturar" class="botao-fisico botao-verde">CAPTURAR</button>
-        <div class="dpad">
-          <div class="dpad-topo"></div>
-          <div class="dpad-meio">
-            <div class="dpad-esq"></div>
-            <div class="dpad-centro"></div>
-            <div class="dpad-dir"></div>
-          </div>
-          <div class="dpad-baixo"></div>
+        <div class="coord-item">
+          <span class="coord-rotulo">Longitude</span>
+          <span class="coord-valor" id="valor-lon">—</span>
         </div>
       </div>
 
-      <div class="fenda-alto-falante">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-    </div>
-    
-    <p class="mensagem-erro" id="mensagem-erro"></p>
+      <p class="legenda-info" id="legenda-info">Nenhuma localização salva ainda.</p>
 
-    <div class="area-drag">
-      <p class="instrucao-drag">Arraste o papel até a lixeira para apagar a localização salva:</p>
+      <button id="btn-capturar" class="botao-principal">
+        📍 Capturar minha localização
+      </button>
+
+      <p class="mensagem-erro" id="mensagem-erro"></p>
+
+    </section>
+
+    <section class="cartao-drag">
+      <p class="titulo-drag">Limpar dados salvos</p>
+      <p class="instrucao-drag">Arraste o papel até a lixeira para apagar a localização salva</p>
 
       <div class="campo-drag">
         <div class="item-papel" id="item-papel" draggable="true">📄</div>
         <div class="zona-lixeira" id="zona-lixeira">🗑️</div>
       </div>
-    </div>
+    </section>
 
   </div>
 
